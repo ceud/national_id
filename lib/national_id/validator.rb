@@ -10,8 +10,8 @@ module NationalID
       @validator = validator
     end
 
-    def validate
-      @validator.validate
+    def validate(value = '')
+      @validator.validate(value)
     end
   end
 end

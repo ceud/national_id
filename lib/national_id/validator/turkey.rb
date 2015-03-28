@@ -1,16 +1,10 @@
 module NationalID
   class Validator
     class Turkey
-      attr_accessor :value
-      attr_reader :format
+      FORMAT = '###-###-###-##'
 
-      def initialize(value)
-        @value = value
-        @format = '###-###-###-##'
-      end
-
-      def validate
-        return false if value.length != format.length
+      def self.validate(value = '')
+        return false if value.length != FORMAT.length
 
         # check that first digit is not zero
         return false if value[0] == '0'

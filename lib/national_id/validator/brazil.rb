@@ -1,16 +1,10 @@
 module NationalID
   class Validator
     class Brazil
-      attr_accessor :value
-      attr_reader :format
+      FORMAT = '###-###-###-##'
 
-      def initialize(value)
-        @value = value
-        @format = '###-###-###-##'
-      end
-
-      def validate
-        return false if value.length != format.length
+      def self.validate(value = '')
+        return false if value.length != FORMAT.length
 
         # check that value isn't simply all zeroes
         return false if value.gsub(/[0-]/, '') == ''

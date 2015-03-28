@@ -1,7 +1,7 @@
 module NationalID
   class Validator
     class None
-      def validate
+      def self.validate(value = '')
         return true
       end
     end

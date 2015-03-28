@@ -45,7 +45,7 @@ NationalID.validate('123-456-789-50');
 ```
 rails new nid_test
 cd nid_test/
-echo 'gem "national_id", :path => “/path/to/gem“’ >> Gemfile
+echo 'gem "national_id", :path => "/path/to/gem"' >> Gemfile
 bundle install
 echo '//= require national_id' >> app/assets/javascripts/application.js
 rails server

@@ -21,12 +21,14 @@ Or install it yourself as:
 ## Usage
 ### Ruby
 ```ruby
-nid = NationalID::Validator.new(NationalID::Validator::Brazil.new('111-111-111-11'))
-nid.validate
+nid = NationalID::Validator.new(NationalID::Validator::Brazil)
+nid.validate('111-111-111-11')
 
 # Change the validator at runtime
-nid.validator = NationalID::Validator::Turkey.new('123-456-789-50')
-nid.validator = NationalID::Validator::None.new
+nid.validator = NationalID::Validator::Turkey
+nid.validate('123-456-789-50')
+
+nid.validator = NationalID::Validator::None
 nid.validate
 ```
 

@@ -19,7 +19,7 @@ Or install it yourself as:
     $ gem install national_id
 
 ## Usage
-
+### Ruby
 ```ruby
 nid = NationalID::Validator.new(NationalID::Validator::Brazil.new('111-111-111-11'))
 nid.validate
@@ -28,6 +28,26 @@ nid.validate
 nid.validator = NationalID::Validator::Turkey.new('123-456-789-50')
 nid.validator = NationalID::Validator::None.new
 nid.validate
+```
+
+### Javascript
+```javascript
+NationalID.validator = NationalID.Validators.Brazil;
+NationalID.validate('111-111-111-11');
+
+NationalID.validator = NationalID.Validators.Turkey;
+NationalID.validate('123-456-789-50');
+```
+
+## Verify
+```
+rails new nid_test
+cd nid_test/
+echo 'gem "national_id", :path => “/path/to/gem“’ >> Gemfile
+bundle install
+echo '//= require national_id' >> app/assets/javascripts/application.js
+rails server
+curl http://localhost:3000/assets/national_id.js
 ```
 
 ## Development

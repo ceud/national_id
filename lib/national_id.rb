@@ -2,5 +2,8 @@ require "national_id/version"
 require "national_id/validator"
 
 module NationalID
-  # Your code goes here...
+  module Rails
+    class Engine < ::Rails::Engine
+    end
+  end
 end

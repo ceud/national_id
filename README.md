@@ -21,7 +21,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-nid = NationalID.new(NationalID::Validator::Brazil.new('111-111-111-11'))
+nid = NationalID::Validator.new(NationalID::Validator::Brazil.new('111-111-111-11'))
 nid.validate
 
 # Change the validator at runtime

@@ -1,5 +1,6 @@
 require "national_id/validator/none"
 require "national_id/validator/brazil"
+require "national_id/validator/poland"
 require "national_id/validator/turkey"
 
 module NationalID

@@ -63,6 +63,47 @@ var NationalID = {
             }
         },
 
+        Poland: {
+            name: 'Poland',
+            format: '##-##-## #####',
+
+            validate: function(value) {
+                var nid = value.replace(/[^0-9]/gmi, "");
+                var id = nid.split("");
+
+                // check that NID isn't just all zeros and is correct length
+                if ((nid.replace(/[0]/gmi, "") == "") || (id.length != 11)) {
+                    return false;
+                }
+
+                // check each NID digit is numeric
+                for (var index = 0; index < id.length; index++) {
+                    if (isNaN(parseInt(id[index]))) {
+                        return false;
+                    }
+                    id[index] = parseInt(id[index]);
+                }
+
+                var check_mod = 
+                (
+                    id[0] + (id[1] * 3) + (id[2] * 7) + (id[3] * 9) +
+                    id[4] + (id[5] * 3) + (id[6] * 7) + (id[7] * 9) +
+                    id[8] + (id[9] * 3)
+                ) % 10;
+
+                var check_value = 0;
+                if (check_mod != 0) {
+                    check_value = 10 - check_mod;
+                }
+
+                if (check_value == id[10]) {
+                    return true;
+                }
+
+                return false;
+            }
+        },
+
         Turkey: {
             name: 'Turkey',
             format: '###-###-###-##',

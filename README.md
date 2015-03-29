@@ -21,15 +21,17 @@ Or install it yourself as:
 ## Usage
 ### Ruby
 ```ruby
+# Defaults to Base validator
+nid = NationalID::Validator.new
+nid.valid?
+
+# Validator can be specified at instantiation
 nid = NationalID::Validator.new(NationalID::Validator::Brazil)
-nid.validate('111-111-111-11')
+nid.valid?('111-111-111-11')
 
 # Change the validator at runtime
 nid.validator = NationalID::Validator::Turkey
-nid.validate('123-456-789-50')
-
-nid.validator = NationalID::Validator::None
-nid.validate
+nid.valid?('123-456-789-50')
 ```
 
 ### Javascript

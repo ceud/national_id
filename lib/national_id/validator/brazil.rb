@@ -1,27 +1,41 @@
 module NationalID
   class Validator
-    class Brazil
-      FORMAT = '###-###-###-##'
+    class Brazil < Base
+      class << self
+        FORMAT = '###-###-###-##'
 
-      def self.validate(value = '')
-        return false if value.length != FORMAT.length
-
-        # check that value isn't simply all zeroes
-        return false if value.gsub(/[0-]/, '') == ''
-
-        id = value.gsub(/-/, '').split('')
-
-        # check each digit is actually numeric
-        id.each do |digit|
-          return false unless digit =~ /[[:digit:]]/
+        def valid?(value = '')
+          return false unless pre_checks_pass?(value, FORMAT)
+          id = id_list(value)
+          digits_match?(id)
         end
 
-        id = id.map {|i| i.to_i}
+        private
 
-        first_value = ((id[0] + (id[1] * 2) + (id[2] * 3) + (id[3] * 4) + (id[4] * 5) + (id[5] * 6) + (id[6] * 7) + (id[7] * 8) + (id[8] * 9)) % 11) % 10
-        second_value = ((id[1] + (id[2] * 2) + (id[3] * 3) + (id[4] * 4) + (id[5] * 5) + (id[6] * 6) + (id[7] * 7) + (id[8] * 8) + (first_value * 9)) % 11) % 10
+        def check_digits(id)
+          first_value = 
+          (
+            (
+              id[0] + (id[1] * 2) + (id[2] * 3) + (id[3] * 4) + (id[4] * 5) + 
+              (id[5] * 6) + (id[6] * 7) + (id[7] * 8) + (id[8] * 9)
+            ) % 11
+          ) % 10
 
-        (first_value == id[9] && second_value == id[10])
+          second_value = 
+          (
+            (
+              id[1] + (id[2] * 2) + (id[3] * 3) + (id[4] * 4) + (id[5] * 5) + 
+              (id[6] * 6) + (id[7] * 7) + (id[8] * 8) + (first_value * 9)
+            ) % 11
+          ) % 10
+
+          return first_value, second_value
+        end
+
+        def digits_match?(id)
+          first, second = check_digits(id)
+          first == id[9] && second == id[10]
+        end
       end
     end
   end

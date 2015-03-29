@@ -1,41 +1,43 @@
 module NationalID
   class Validator
-    class Turkey
-      FORMAT = '###-###-###-##'
+    class Turkey < Base
+      class << self
+        FORMAT = '###-###-###-##'
 
-      def self.validate(value = '')
-        return false if value.length != FORMAT.length
-
-        # check that first digit is not zero
-        return false if value[0] == '0'
-
-        # check that value isn't simply all zeroes
-        return false if value.gsub(/[0-]/, '') == ''
-
-        id = value.gsub(/-/, '').split('')
-
-        # check each digit is actually numeric
-        id.each do |digit|
-          return false unless digit =~ /[[:digit:]]/
+        def valid?(value = '')
+          return false unless pre_checks_pass?(value, FORMAT)
+          id = id_list(value)
+          digits_match?(id)
         end
 
-        id = id.map {|i| i.to_i}
+        private
 
-        first_value = 
-        10 - (
-          (
-            3 * (id[0] + id[2] + id[4] + id[6] + id[8]) + id[1] + id[3] + id[5] + id[7]
-          ) % 10
-        ) % 10
+        def pre_checks_pass?(value, format)
+          super && not_start_with_zero?(value)
+        end
 
-        second_value = 
-        (
+        def check_digits(id)
+          first_value = 
           10 - (
-            (id[0] + id[2] + id[4] + id[6] + id[8] + 3) * (id[1] + id[3] + id[5] + id[7] + first_value)
+            (
+              3 * (id[0] + id[2] + id[4] + id[6] + id[8]) + id[1] + id[3] + id[5] + id[7]
+            ) % 10
           ) % 10
-        ) % 10
 
-        (first_value == id[9] && second_value == id[10])
+          second_value = 
+          (
+            10 - (
+              (id[0] + id[2] + id[4] + id[6] + id[8] + 3) * (id[1] + id[3] + id[5] + id[7] + first_value)
+            ) % 10
+          ) % 10
+
+          return first_value, second_value
+        end
+
+        def digits_match?(id)
+          first, second = check_digits(id)
+          first == id[9] && second == id[10]
+        end
       end
     end
   end

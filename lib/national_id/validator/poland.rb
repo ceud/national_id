@@ -1,33 +1,31 @@
 module NationalID
   class Validator
-    class Poland
-      FORMAT = '##-##-## #####'
+    class Poland < Base
+      class << self
+        FORMAT = '##-##-## #####'
 
-      def self.validate(value = '')
-        return false if value.length != FORMAT.length
-
-        # check that value isn't simply all zeroes
-        return false if value.gsub(/[ 0-]/, '') == ''
-
-        id = value.gsub(/[ ]|[-]/, '').split('')
-
-        # check each digit is actually numeric
-        id.each do |digit|
-          return false unless digit =~ /[[:digit:]]/
+        def valid?(value = '')
+          return false unless pre_checks_pass?(value, FORMAT)
+          id = id_list(value)
+          digits_match?(id)
         end
 
-        id = id.map {|i| i.to_i}
+        private
 
-        check_mod =
-        (
-          id[0] + (id[1] * 3) + (id[2] * 7) + (id[3] * 9) +
-          id[4] + (id[5] * 3) + (id[6] * 7) + (id[7] * 9) +
-          id[8] + (id[9] * 3)
-        ) % 10
+        def check_digit(id)
+          check_mod =
+          (
+            id[0] + (id[1] * 3) + (id[2] * 7) + (id[3] * 9) +
+            id[4] + (id[5] * 3) + (id[6] * 7) + (id[7] * 9) +
+            id[8] + (id[9] * 3)
+          ) % 10
 
-        check_value = check_mod == 0 ? 0 : 10 - check_mod
+          check_mod == 0 ? 0 : 10 - check_mod
+        end
 
-        check_value == id[10]
+        def digits_match?(id)
+          check_digit(id) == id[10]
+        end
       end
     end
   end

@@ -38,15 +38,15 @@ Or install it yourself as:
 ```ruby
 # Defaults to Base validator
 nid = NationalID::Validator.new
-nid.valid?
+nid.validation.success?
 
 # Validator can be specified at instantiation
 nid = NationalID::Validator.new(NationalID::Validator::Brazil)
-nid.valid?('111-111-111-11')
+nid.validation('111-111-111-11').success?
 
 # Change the validator at runtime
 nid.validator = NationalID::Validator::Turkey
-nid.valid?('123-456-789-50')
+nid.validation('123-456-789-50').success?
 ```
 
 ### Javascript

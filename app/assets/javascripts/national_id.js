@@ -104,7 +104,7 @@ var NationalID = {
 
                 return (first_value == id[9] && second_value == id[10]);
             }
-        }
+        },
 
         Poland: {
             name: 'Poland',

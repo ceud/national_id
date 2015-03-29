@@ -52,10 +52,10 @@ nid.valid?('123-456-789-50')
 ### Javascript
 ```javascript
 NationalID.validator = NationalID.Validators.Brazil;
-NationalID.validate('111-111-111-11');
+NationalID.valid('111-111-111-11');
 
 NationalID.validator = NationalID.Validators.Turkey;
-NationalID.validate('123-456-789-50');
+NationalID.valid('123-456-789-50');
 ```
 
 ## Verify

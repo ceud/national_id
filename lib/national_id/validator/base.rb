@@ -2,35 +2,45 @@ module NationalID
   class Validator
     class Base
       class << self
-        def valid?(value = '')
-          return true
+        def validation(value = '')
+          return Validation.new
         end
 
         protected
 
         def not_zeroes?(value)
-          value.gsub(/[^1-9]/, '') != ''
+          result = value.gsub(/[^1-9]/, '') != ''
+          result ? result : validation_failure('NID value cannot contain only zeroes')
         end
 
         def not_start_with_zero?(value)
-          value[0] != '0'
+          result = value[0] != '0'
+          result ? result : validation_failure('NID value cannot start with zero')
         end
 
         def correct_length?(value, format)
-          value.length == format.length
+          result = value.length == format.length
+          result ? result : validation_failure('NID value has wrong length')
         end
 
         def all_numeric?(value)
           string_id_list(value).each do |digit|
-            return false unless digit =~ /[[:digit:]]/
+            return validation_failure('NID value non-numeric content') unless digit =~ /[[:digit:]]/
           end
           true
         end
 
         def pre_checks_pass?(value, format)
-          correct_length?(value, format) && 
-          not_zeroes?(value) && 
-          all_numeric?(value)
+          result = correct_length?(value, format)
+          return result unless result.equal?(true)
+
+          result = not_zeroes?(value)
+          return result unless result.equal?(true)
+
+          result = all_numeric?(value)
+          return result unless result.equal?(true)
+
+          true
         end
 
         def id_list(value)
@@ -41,6 +51,10 @@ module NationalID
 
         def string_id_list(value)
           value.gsub(/[^0-9]/, '').split('')
+        end
+
+        def validation_failure(error_message)
+          Validation.new(success: false, error_message: error_message)
         end
       end
     end

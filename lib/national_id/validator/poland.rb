@@ -4,8 +4,10 @@ module NationalID
       class << self
         FORMAT = '##-##-## #####'
 
-        def valid?(value = '')
-          return false unless pre_checks_pass?(value, FORMAT)
+        def validation(value = '')
+          result = pre_checks_pass?(value, FORMAT)
+          return result unless result.equal?(true)
+
           id = id_list(value)
           digits_match?(id)
         end
@@ -24,7 +26,8 @@ module NationalID
         end
 
         def digits_match?(id)
-          check_digit(id) == id[10]
+          result = check_digit(id) == id[10]
+          result ? Validation.new : validation_failure('NID value is invalid')
         end
       end
     end

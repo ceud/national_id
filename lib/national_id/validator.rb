@@ -1,3 +1,5 @@
+require 'national_id/validator/validation'
+
 require 'national_id/validator/base'
 require 'national_id/validator/brazil'
 require 'national_id/validator/norway'
@@ -12,8 +14,8 @@ module NationalID
       @validator = validator
     end
 
-    def valid?(value = '')
-      @validator.valid?(value)
+    def validation(value = '')
+      @validator.validation(value)
     end
   end
 end

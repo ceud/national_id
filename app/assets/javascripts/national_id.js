@@ -5,13 +5,13 @@ var NationalID = {
         if (this.Validators[this.validator.name]) {
             return this.Validators[this.validator.name].validate(value)
         } else {
-            return this.Validators.None.validate(value)
+            return this.Validators.Base.validate(value)
         }
     },
 
     Validators: {
-        None: {
-            name: 'None',
+        Base: {
+            name: 'Base',
 
             validate: function(value) {
                 return true;

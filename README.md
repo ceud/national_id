@@ -18,6 +18,21 @@ Or install it yourself as:
 
     $ gem install national_id
 
+## Validators
+### Ruby
+* `NationalID::Validator::Base`
+  * `NationalID::Validator::Brazil`
+  * `NationalID::Validator::Norway`
+  * `NationalID::Validator::Poland`
+  * `NationalID::Validator::Turkey`
+
+## Javascript
+* `NationalID.Validator.Base`
+  * `NationalID.Validator.Brazil`
+  * `NationalID.Validator.Norway`
+  * `NationalID.Validator.Poland`
+  * `NationalID.Validator.Turkey`
+
 ## Usage
 ### Ruby
 ```ruby

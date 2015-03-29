@@ -63,6 +63,49 @@ var NationalID = {
             }
         },
 
+        Norway: {
+            name: 'Norway',
+            format: '##-##-## #####',
+
+            validate: function(value) {
+                var nid = value.replace(/[^0-9]/gmi, "");
+                var id = nid.split("");
+
+                // check that NID isn't just all zeros and is correct length
+                if ((nid.replace(/[0]/gmi, "") == "") || (id.length != 11)) {
+                    return false;
+                }
+
+                // check each NID digit is numeric
+                for (var index = 0; index < id.length; index++) {
+                    if (isNaN(parseInt(id[index]))) {
+                        return false;
+                    }
+                    id[index] = parseInt(id[index]);
+                }
+
+                first_value = 
+                11 - (
+                  (
+                    (id[0] * 3) + (id[1] * 7) + (id[2] * 6) + (id[3] * 1) + 
+                    (id[4] * 8) + (id[5] * 9) + (id[6] * 4) + (id[7] * 5) + 
+                    (id[8] * 2)
+                  ) % 11
+                );
+
+                second_value = 
+                11 - (
+                  (
+                    (id[1] * 5) + (id[2] * 4) + (id[3] * 3) + (id[4] * 2) + 
+                    (id[5] * 7) + (id[6] * 6) + (id[7] * 5) + (id[8] * 4) + 
+                    (id[9] * 3) + (first_value * 2)
+                  ) % 11
+                );
+
+                return (first_value == id[9] && second_value == id[10]);
+            }
+        }
+
         Poland: {
             name: 'Poland',
             format: '##-##-## #####',
@@ -130,16 +173,16 @@ var NationalID = {
                   (
                     3 * (id[0] + id[2] + id[4] + id[6] + id[8]) + id[1] + id[3] + id[5] + id[7]
                   ) % 10
-                ) % 10
+                ) % 10;
 
                 second_value = 
                 (
                   10 - (
                     (id[0] + id[2] + id[4] + id[6] + id[8] + 3) * (id[1] + id[3] + id[5] + id[7] + first_value)
                   ) % 10
-                ) % 10
+                ) % 10;
 
-                return (first_value == id[9] && second_value == id[10])
+                return (first_value == id[9] && second_value == id[10]);
             }
         }
     }

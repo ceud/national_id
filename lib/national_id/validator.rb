@@ -1,4 +1,4 @@
-require 'national_id/validator/validation'
+require 'national_id/validation'
 
 require 'national_id/validator/base'
 require 'national_id/validator/brazil'

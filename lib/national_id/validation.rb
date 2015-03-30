@@ -1,5 +1,5 @@
 module NationalID
-  class Validator
+  # class Validator
     class Validation
       attr_writer :success, :error_message
 
@@ -20,5 +20,5 @@ module NationalID
         !@error_message. == ''
       end
     end
-  end
+  # end
 end

@@ -24,6 +24,7 @@ module NationalID
         end
 
         def all_numeric?(value)
+          p 'base all_numeric?'
           string_id_list(value).each do |digit|
             return validation_failure('NID value non-numeric content') unless digit =~ /[[:digit:]]/
           end
@@ -44,17 +45,19 @@ module NationalID
         end
 
         def id_list(value)
-          string_id_list(value).map {|i| i.to_i}
+          string_id_list(value).map {|i| numeric?(i) ? i.to_i : i}
         end
 
-        private
-
         def string_id_list(value)
-          value.gsub(/[^0-9]/, '').split('')
+          value.gsub(/[^0-9a-zA-Z]/, '').split('')
         end
 
         def validation_failure(error_message)
           Validation.new(success: false, error_message: error_message)
+        end
+
+        def numeric?(value)
+          true if Float(value) rescue false
         end
       end
     end

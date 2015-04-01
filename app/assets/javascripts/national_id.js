@@ -86,6 +86,53 @@ var NationalID = {
             }
         },
 
+        Peru: {
+            name: 'Peru',
+            format: '##-##-##-## ?',
+
+            valid: function(value) {
+                if (!NationalID.not_zeroes(value) || 
+                    !NationalID.correct_length(value, NationalID.format()) || 
+                    !NationalID.all_numeric(value.slice(0, -1))) {
+                    return false;
+                }
+
+                // check digit
+                var id = NationalID.id_list(value);
+
+                var multiplier = [3, 2, 7, 6, 5, 4, 3, 2];
+
+                var numeric_part = id.slice();
+                var control_part = numeric_part.pop(1);
+
+                var sum = 0;
+                for (var index = 0; index < numeric_part.length; index++) {
+                    sum += numeric_part[index] * multiplier[index];
+                }
+
+                var modulus = 11 - (sum % 11);
+                var key = ((modulus == 11) ? 0 : modulus);
+
+                // digit matches?
+                var list = [
+                    ['6', 'K'],
+                    ['7', 'A'],
+                    ['8', 'B'],
+                    ['9', 'C'],
+                    ['0', 'D'],
+                    ['1', 'E'],
+                    ['1', 'F'],
+                    ['2', 'G'],
+                    ['3', 'H'],
+                    ['4', 'I'],
+                    ['5', 'J']
+                ];
+
+                var check = id[8].toString().toUpperCase();
+                return (list[key][0] == check || list[key][1] == check);
+            }
+        },
+
         Poland: {
             name: 'Poland',
             format: '##-##-## #####',
@@ -171,18 +218,30 @@ var NationalID = {
     all_numeric: function(value) {
         var id_list = NationalID.string_id_list(value);
         for (var index = 0; index < id_list.length; index++) {
-            if (isNaN(parseInt(id_list[index]))) {
+            if (!NationalID.numeric(id_list[index])) {
                 return false;
             }
         }
         return true;
     },
 
+    numeric: function(value) {
+        return !isNaN(parseFloat(value));
+    },
+
     id_list: function(value) {
-        return NationalID.string_id_list(value).map(Number);
+        // return NationalID.string_id_list(value).map(Number);
+        return NationalID.string_id_list(value).map(function(element) {
+          if (NationalID.numeric(element)) {
+              return parseFloat(element);
+          }
+          else {
+              return element;
+          }
+        });
     },
 
     string_id_list: function(value) {
-        return value.replace(/[^0-9]/gmi, '').split('');
+        return value.replace(/[^0-9a-zA-Z]/gmi, '').split('');
     }
 }

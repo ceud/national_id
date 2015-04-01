@@ -23,6 +23,7 @@ Or install it yourself as:
 * `NationalID::Validator::Base`
   * `NationalID::Validator::Brazil`
   * `NationalID::Validator::Norway`
+  * `NationalID::Validator::Peru`
   * `NationalID::Validator::Poland`
   * `NationalID::Validator::Turkey`
 
@@ -30,6 +31,7 @@ Or install it yourself as:
 * `NationalID.Validator.Base`
   * `NationalID.Validator.Brazil`
   * `NationalID.Validator.Norway`
+  * `NationalID.Validator.Peru`
   * `NationalID.Validator.Poland`
   * `NationalID.Validator.Turkey`
 

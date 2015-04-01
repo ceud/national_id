@@ -29,11 +29,11 @@ Or install it yourself as:
 
 ## Javascript
 * `NationalID.Validator.Base`
-  * `NationalID.Validator.Brazil`
-  * `NationalID.Validator.Norway`
-  * `NationalID.Validator.Peru`
-  * `NationalID.Validator.Poland`
-  * `NationalID.Validator.Turkey`
+* `NationalID.Validator.Brazil`
+* `NationalID.Validator.Norway`
+* `NationalID.Validator.Peru`
+* `NationalID.Validator.Poland`
+* `NationalID.Validator.Turkey`
 
 ## Usage
 ### Ruby
@@ -79,7 +79,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/national_id/fork )
+1. Fork it ( https://github.com/ceud/national_id/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

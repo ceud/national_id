@@ -88,7 +88,7 @@ var NationalID = {
 
         Peru: {
             name: 'Peru',
-            format: '##-##-##-## ?',
+            format: '##-##-##-## *',
 
             valid: function(value) {
                 if (!NationalID.not_zeroes(value) || 

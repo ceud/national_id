@@ -2,7 +2,7 @@ module NationalID
   class Validator
     class Peru < Base
       class << self
-        FORMAT = '##-##-##-## ?'
+        FORMAT = '##-##-##-## *'
 
         def validation(value = '')
           result = pre_checks_pass?(value, FORMAT)

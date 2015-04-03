@@ -51,6 +51,32 @@ var NationalID = {
             }
         },
 
+        Lebanon: {
+            name: 'Lebanon',
+            format: '**** **** **** #',
+
+            valid: function(value) {
+                if (!NationalID.not_zeroes(value) || 
+                    !NationalID.correct_length(value, NationalID.format()) || 
+                    !NationalID.numeric(value.slice(-1))) {
+                    return false;
+                }
+
+                var id = NationalID.id_list(value);
+                var numeric_list = NationalID.id_list_to_numeric(id);
+
+                var main_part = numeric_list.slice(0, -1);
+
+                var weights = [7, 3, 1];
+                var sum = 0;
+                for (var index = 0; index < main_part.length; index++) {
+                    sum += main_part[index] * weights[index % 3];
+                }
+
+                return (sum % 10 == id[12]);
+            }
+        },
+
         Norway: {
             name: 'Norway',
             format: '##-##-## #####',
@@ -229,8 +255,17 @@ var NationalID = {
         return !isNaN(parseFloat(value));
     },
 
+    id_list_to_numeric: function(id) {
+        var id_list = id.slice();
+        for (var index = 0; index < id_list.length; index++) {
+            if (!NationalID.numeric(id_list[index])) {
+                id_list[index] = id_list[index].toUpperCase().charCodeAt();
+            }
+        }
+        return id_list;
+    },
+
     id_list: function(value) {
-        // return NationalID.string_id_list(value).map(Number);
         return NationalID.string_id_list(value).map(function(element) {
           if (NationalID.numeric(element)) {
               return parseFloat(element);

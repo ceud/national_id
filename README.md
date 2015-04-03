@@ -22,6 +22,7 @@ Or install it yourself as:
 ### Ruby
 * `NationalID::Validator::Base`
   * `NationalID::Validator::Brazil`
+  * `NationalID::Validator::Lebanon`
   * `NationalID::Validator::Norway`
   * `NationalID::Validator::Peru`
   * `NationalID::Validator::Poland`
@@ -30,6 +31,7 @@ Or install it yourself as:
 ## Javascript
 * `NationalID.Validator.Base`
 * `NationalID.Validator.Brazil`
+* `NationalID.Validator.Lebanon`
 * `NationalID.Validator.Norway`
 * `NationalID.Validator.Peru`
 * `NationalID.Validator.Poland`

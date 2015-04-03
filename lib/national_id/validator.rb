@@ -2,6 +2,7 @@ require 'national_id/validation'
 
 require 'national_id/validator/base'
 require 'national_id/validator/brazil'
+require 'national_id/validator/lebanon'
 require 'national_id/validator/norway'
 require 'national_id/validator/peru'
 require 'national_id/validator/poland'

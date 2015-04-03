@@ -31,6 +31,10 @@ module NationalID
           true
         end
 
+        def numeric?(value)
+          true if Float(value) rescue false
+        end
+
         def pre_checks_pass?(value, format)
           result = correct_length?(value, format)
           return result unless result.equal?(true)
@@ -44,6 +48,14 @@ module NationalID
           true
         end
 
+        def numeric_list(value)
+          string_id_list(value).map {|i| numeric?(i) ? i.to_i : i.upcase.ord - 55}
+        end
+
+        def id_list_to_numeric(id)
+          id.map {|i| numeric?(i) ? i.to_i : i.upcase.ord - 55}
+        end
+
         def id_list(value)
           string_id_list(value).map {|i| numeric?(i) ? i.to_i : i}
         end
@@ -54,10 +66,6 @@ module NationalID
 
         def validation_failure(error_message)
           Validation.new(success: false, error_message: error_message)
-        end
-
-        def numeric?(value)
-          true if Float(value) rescue false
         end
       end
     end

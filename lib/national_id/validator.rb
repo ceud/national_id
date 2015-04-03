@@ -13,11 +13,19 @@ module NationalID
     attr_accessor :validator
 
     def initialize(validator = Base)
-      @validator = validator
+      if validator.ancestors.include? NationalID::Validator::Base
+        @validator = validator
+      else
+        @validator = Base
+      end
     end
 
     def validation(value = '')
-      @validator.validation(value)
+      if value.is_a?(String)
+        @validator.validation(value)
+      else
+        Validation.new(success: false, error_message: 'Validation value must be a string.')
+      end
     end
   end
 end

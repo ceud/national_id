@@ -29,7 +29,7 @@ module NationalID
           multiplier = [3, 2, 7, 6, 5, 4, 3, 2]
 
           numeric_part = id.clone
-          control_part = numeric_part.pop(1)
+          numeric_part.pop(1)
 
           sum = 0
           numeric_part.each_with_index do |digit, index|
@@ -37,22 +37,13 @@ module NationalID
           end
 
           modulus = 11 - (sum % 11)
-          key = modulus == 11 ? 0 : modulus
+          modulus == 11 ? 0 : modulus
         end
 
         def digits_match?(id)
           check_list = [
-            ['6', 'K'],
-            ['7', 'A'],
-            ['8', 'B'],
-            ['9', 'C'],
-            ['0', 'D'],
-            ['1', 'E'],
-            ['1', 'F'],
-            ['2', 'G'],
-            ['3', 'H'],
-            ['4', 'I'],
-            ['5', 'J']
+            %w(6 K), %w(7 A), %w(8 B), %w(9 C), %w(0 D), %w(1 E),
+            %w(1 F), %w(2 G), %w(3 H), %w(4 I), %w(5 J)
           ]
 
           digit = check_digit(id)

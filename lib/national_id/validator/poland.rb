@@ -15,14 +15,14 @@ module NationalID
         private
 
         def check_digit(id)
-          check_mod =
-          (
-            id[0] + (id[1] * 3) + (id[2] * 7) + (id[3] * 9) +
-            id[4] + (id[5] * 3) + (id[6] * 7) + (id[7] * 9) +
-            id[8] + (id[9] * 3)
-          ) % 10
+          multiplier = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
 
-          check_mod == 0 ? 0 : 10 - check_mod
+          digit = 0
+          (0..9).each do |index|
+            digit += id[index] * multiplier[index]
+          end
+
+          digit % 10 == 0 ? 0 : 10 - (digit % 10)
         end
 
         def digits_match?(id)

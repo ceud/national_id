@@ -2,8 +2,8 @@ module NationalID
   class Validator
     class Base
       class << self
-        def validation(value = '')
-          return Validation.new
+        def validation(_value = '')
+          Validation.new
         end
 
         protected
@@ -49,15 +49,15 @@ module NationalID
         end
 
         def numeric_list(value)
-          string_id_list(value).map {|i| numeric?(i) ? i.to_i : i.upcase.ord - 55}
+          string_id_list(value).map { |i| numeric?(i) ? i.to_i : i.upcase.ord - 55 }
         end
 
         def id_list_to_numeric(id)
-          id.map {|i| numeric?(i) ? i.to_i : i.upcase.ord - 55}
+          id.map { |i| numeric?(i) ? i.to_i : i.upcase.ord - 55 }
         end
 
         def id_list(value)
-          string_id_list(value).map {|i| numeric?(i) ? i.to_i : i}
+          string_id_list(value).map { |i| numeric?(i) ? i.to_i : i }
         end
 
         def string_id_list(value)

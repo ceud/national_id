@@ -14,32 +14,37 @@ module NationalID
 
         private
 
-        def check_digits(id)
-          first_value = 
-          11 - (
-            (
-              (id[0] * 3) + (id[1] * 7) + (id[2] * 6) + (id[3] * 1) + 
-              (id[4] * 8) + (id[5] * 9) + (id[6] * 4) + (id[7] * 5) + 
-              (id[8] * 2)
-            ) % 11
-          )
-
-          second_value = 
-          11 - (
-            (
-              (id[1] * 5) + (id[2] * 4) + (id[3] * 3) + (id[4] * 2) + 
-              (id[5] * 7) + (id[6] * 6) + (id[7] * 5) + (id[8] * 4) + 
-              (id[9] * 3) + (first_value * 2)
-            ) % 11
-          )
-
-          return first_value, second_value
-        end
-
         def digits_match?(id)
           first, second = check_digits(id)
           result = first == id[9] && second == id[10]
           result ? Validation.new : validation_failure('NID value is invalid')
+        end
+
+        def check_digits(id)
+          first = first_check_digit(id)
+          return first, second_check_digit(id, first)
+        end
+
+        def first_check_digit(id)
+          multiplier = [3, 7, 6, 1, 8, 9, 4, 5, 2]
+
+          digit = 0
+          (0..8).each do |index|
+            digit += id[index] * multiplier[index]
+          end
+
+          11 - (digit % 11)
+        end
+
+        def second_check_digit(id, first)
+          multiplier = [5, 4, 3, 2, 7, 6, 5, 4, 3]
+
+          digit = 0
+          (0..8).each do |index|
+            digit += id[index + 1] * multiplier[index]
+          end
+
+          11 - ((digit + (first * 2)) % 11)
         end
       end
     end

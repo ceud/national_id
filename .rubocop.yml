@@ -1,0 +1,7 @@
+inherit_from: .hound.yml
+
+Documentation:
+  Enabled: false
+RedundantReturn:
+  # When true allows code like `return x, y`.
+  AllowMultipleReturnValues: true

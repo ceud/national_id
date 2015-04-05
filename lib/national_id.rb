@@ -1,5 +1,5 @@
-require "national_id/version"
-require "national_id/validator"
+require 'national_id/version'
+require 'national_id/validator'
 
 module NationalID
   module Rails

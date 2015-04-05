@@ -25,21 +25,30 @@ module NationalID
         end
 
         def check_digits(id)
-          first_value = 
-          10 - (
-            (
-              3 * (id[0] + id[2] + id[4] + id[6] + id[8]) + id[1] + id[3] + id[5] + id[7]
-            ) % 10
-          ) % 10
+          first = first_check_digit(id)
+          return first, second_check_digit(id, first)
+        end
 
-          second_value = 
-          (
-            10 - (
-              (id[0] + id[2] + id[4] + id[6] + id[8] + 3) * (id[1] + id[3] + id[5] + id[7] + first_value)
-            ) % 10
-          ) % 10
+        def first_check_digit(id)
+          sum1, sum2 = 0
 
-          return first_value, second_value
+          (0..8).each do |index|
+            sum1 += id[index] if index.even?
+            sum2 += id[index] if index.odd?
+          end
+
+          10 - ((3 * sum1 + sum2) % 10) % 10
+        end
+
+        def second_check_digit(id, first)
+          sum1, sum2 = 0
+
+          (0..8).each do |index|
+            sum1 += id[index] if index.even?
+            sum2 += id[index] if index.odd?
+          end
+
+          10 - (((sum1 + 3) * (sum2 + first)) % 10) % 10
         end
 
         def digits_match?(id)

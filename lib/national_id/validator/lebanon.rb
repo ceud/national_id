@@ -38,7 +38,7 @@ module NationalID
 
         def weighted(numeric_id)
           weights = [7, 3, 1]
-          numeric_id.each_with_index do |digit, index|
+          numeric_id.each_with_index do |_digit, index|
             numeric_id[index] *= weights[index % 3]
           end
         end

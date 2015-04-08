@@ -47,7 +47,7 @@ var NationalID = {
                   ) % 11
                 ) % 10;
 
-                return (first_value == id[9] && second_value == id[10]);
+                return (first_value === id[9] && second_value === id[10]);
             }
         },
 
@@ -73,7 +73,7 @@ var NationalID = {
                     sum += main_part[index] * weights[index % 3];
                 }
 
-                return (sum % 10 == id[12]);
+                return (sum % 10 === id[12]);
             }
         },
 
@@ -90,7 +90,7 @@ var NationalID = {
 
                 var id = NationalID.id_list(value);
 
-                first_value = 
+                var first_value = 
                 11 - (
                   (
                     (id[0] * 3) + (id[1] * 7) + (id[2] * 6) + (id[3] * 1) + 
@@ -99,7 +99,7 @@ var NationalID = {
                   ) % 11
                 );
 
-                second_value = 
+                var second_value = 
                 11 - (
                   (
                     (id[1] * 5) + (id[2] * 4) + (id[3] * 3) + (id[4] * 2) + 
@@ -108,7 +108,7 @@ var NationalID = {
                   ) % 11
                 );
 
-                return (first_value == id[9] && second_value == id[10]);
+                return (first_value === id[9] && second_value === id[10]);
             }
         },
 
@@ -137,7 +137,7 @@ var NationalID = {
                 }
 
                 var modulus = 11 - (sum % 11);
-                var key = ((modulus == 11) ? 0 : modulus);
+                var key = ((modulus === 11) ? 0 : modulus);
 
                 // digit matches?
                 var list = [
@@ -155,7 +155,7 @@ var NationalID = {
                 ];
 
                 var check = id[8].toString().toUpperCase();
-                return (list[key][0] == check || list[key][1] == check);
+                return (list[key][0] === check || list[key][1] === check);
             }
         },
 
@@ -180,11 +180,11 @@ var NationalID = {
                 ) % 10;
 
                 var check_value = 0;
-                if (check_mod != 0) {
+                if (check_mod !== 0) {
                     check_value = 10 - check_mod;
                 }
 
-                return (check_value == id[10]);
+                return (check_value === id[10]);
             }
         },
 
@@ -202,21 +202,21 @@ var NationalID = {
 
                 var id = NationalID.id_list(value);
 
-                first_value = 
+                var first_value = 
                 10 - (
                   (
                     3 * (id[0] + id[2] + id[4] + id[6] + id[8]) + id[1] + id[3] + id[5] + id[7]
                   ) % 10
                 ) % 10;
 
-                second_value = 
+                var second_value = 
                 (
                   10 - (
                     (id[0] + id[2] + id[4] + id[6] + id[8] + 3) * (id[1] + id[3] + id[5] + id[7] + first_value)
                   ) % 10
                 ) % 10;
 
-                return (first_value == id[9] && second_value == id[10]);
+                return (first_value === id[9] && second_value === id[10]);
             }
         }
     },
@@ -230,15 +230,15 @@ var NationalID = {
     },
 
     not_zeroes: function(value) {
-        return ((value.replace(/[0]/gmi, "") != "") ? true : false);
+        return ((value.replace(/[0]/gmi, "") !== "") ? true : false);
     },
 
     not_start_with_zero: function(value) {
-        return ((value[0] != '0') ? true : false);
+        return ((value[0] !== '0') ? true : false);
     },
 
     correct_length: function(value, format) {
-        return ((value.length == format.length) ? true : false);
+        return ((value.length === format.length) ? true : false);
     },
 
     all_numeric: function(value) {

@@ -15,15 +15,9 @@ module NationalID
         private
 
         def pre_checks_pass?(value, format)
-          result = correct_length?(value, format)
+          result = super
           return result unless result.equal?(true)
-
-          result = not_zeroes?(value)
-          return result unless result.equal?(true)
-
-          result = numeric?(value.slice(-1))
-          return validation_failure('NID contains non-numeric check digit') unless result.equal?(true)
-
+          return error_numeric unless numeric?(value.slice(-1))
           true
         end
 
@@ -33,12 +27,12 @@ module NationalID
 
         def digits_match?(id)
           result = check_digit(id) == id[12]
-          result ? Validation.new : validation_failure('NID value is invalid')
+          result ? Validation.new : validation_failure(NID_INVALID_MSG)
         end
 
         def weighted(numeric_id)
           weights = [7, 3, 1]
-          numeric_id.each_with_index do |_digit, index|
+          numeric_id[0...-1].each_with_index do |_digit, index|
             numeric_id[index] *= weights[index % 3]
           end
         end

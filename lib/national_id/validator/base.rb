@@ -8,44 +8,33 @@ module NationalID
 
         protected
 
+        def pre_checks_pass?(value, format)
+          return error_correct_length unless correct_length?(value, format)
+          return error_not_zeroes unless not_zeroes?(value)
+          true
+        end
+
         def not_zeroes?(value)
-          result = value.gsub(/[^1-9]/, '') != ''
-          result ? result : validation_failure('NID value cannot contain only zeroes')
+          value.gsub(/[0]/, '') != ''
         end
 
         def not_start_with_zero?(value)
-          result = value[0] != '0'
-          result ? result : validation_failure('NID value cannot start with zero')
+          value[0] != '0'
         end
 
         def correct_length?(value, format)
-          result = value.length == format.length
-          result ? result : validation_failure('NID value has wrong length')
+          value.length == format.length
         end
 
         def all_numeric?(value)
-          p 'base all_numeric?'
           string_id_list(value).each do |digit|
-            return validation_failure('NID value non-numeric content') unless digit =~ /[[:digit:]]/
+            return false unless digit =~ /[[:digit:]]/
           end
           true
         end
 
         def numeric?(value)
           true if Float(value) rescue false
-        end
-
-        def pre_checks_pass?(value, format)
-          result = correct_length?(value, format)
-          return result unless result.equal?(true)
-
-          result = not_zeroes?(value)
-          return result unless result.equal?(true)
-
-          result = all_numeric?(value)
-          return result unless result.equal?(true)
-
-          true
         end
 
         def numeric_list(value)
@@ -62,6 +51,26 @@ module NationalID
 
         def string_id_list(value)
           value.gsub(/[^0-9a-zA-Z]/, '').split('')
+        end
+
+        def error_not_zeroes
+          validation_failure(NID_ONLY_ZEROES_MSG)
+        end
+
+        def error_not_start_with_zero
+          validation_failure(NID_NO_ZERO_START_MSG)
+        end
+
+        def error_correct_length
+          validation_failure(NID_WRONG_LENGTH_MSG)
+        end
+
+        def error_all_numeric
+          validation_failure(NID_NON_NUMERIC_MSG)
+        end
+
+        def error_numeric
+          validation_failure(NID_NON_NUMERIC_CHECK_MSG)
         end
 
         def validation_failure(error_message)

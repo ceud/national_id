@@ -14,6 +14,13 @@ module NationalID
 
         private
 
+        def pre_checks_pass?(value, format)
+          result = super
+          return result unless result.equal?(true)
+          return error_all_numeric unless all_numeric?(value)
+          true
+        end
+
         def check_digit(id)
           multiplier = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
 
@@ -27,7 +34,7 @@ module NationalID
 
         def digits_match?(id)
           result = check_digit(id) == id[10]
-          result ? Validation.new : validation_failure('NID value is invalid')
+          result ? Validation.new : validation_failure(NID_INVALID_MSG)
         end
       end
     end

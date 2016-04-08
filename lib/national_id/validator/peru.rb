@@ -14,13 +14,20 @@ module NationalID
 
         private
 
+        def pre_checks_pass?(value, format)
+          result = super
+          return result unless result.equal?(true)
+          return error_all_numeric unless all_numeric?(value)
+          true
+        end
+
         # last (check) character can be alphanumeric
         # first 8 should always be numeric
         def all_numeric?(value)
           list = string_id_list(value)
           list.pop(1)
           list.each do |digit|
-            return validation_failure('NID value non-numeric content') unless digit =~ /[[:digit:]]/
+            return validation_failure(NID_NON_NUMERIC_MSG) unless digit =~ /[[:digit:]]/
           end
           true
         end
@@ -49,7 +56,7 @@ module NationalID
           digit = check_digit(id)
 
           result = check_list[digit].include? id[8].to_s.upcase
-          result ? Validation.new : validation_failure('NID value is invalid')
+          result ? Validation.new : validation_failure(NID_INVALID_MSG)
         end
       end
     end
